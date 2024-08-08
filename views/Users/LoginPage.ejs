@@ -1,0 +1,54 @@
+<% layout('layouts/BiolerPlate')%>
+<h1>Login Page</h1>
+<form action="/login" method="post" class="Validated" novalidate>
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      class="form-control"
+    />
+    <div class="valid-feedback">Looks Good!</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <!-- Corrected typo here -->
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      class="form-control"
+    />
+    <div class="valid-feedback">Looks Good!</div>
+  </div>
+
+  <button class="btn btn-success">Login</button>
+</form>
+<script>
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".Validated"); // Corrected selector
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

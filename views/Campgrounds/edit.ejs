@@ -1,0 +1,105 @@
+<% layout('Layouts/BiolerPlate') %>
+
+<h1 class="text-center">Edit Campground</h1>
+<div class="row">
+  <div class="col-6 offset-3">
+    <form
+      action="/campgrounds/<%= campground._id %>?_method=PUT"
+      method="post"
+      class="formValidated"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          required
+          class="form-control"
+          type="text"
+          id="title"
+          name="campground[title]"
+          value="<%= campground.title %>"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+          required
+          class="form-control mb-3"
+          type="text"
+          id="location"
+          name="campground[location]"
+          value="<%= campground.location %>"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Image URL</label>
+        <input
+          required
+          class="form-control"
+          type="text"
+          id="image"
+          name="campground[image]"
+          value="<%= campground.image %>"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="price">Price</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">$</span>
+          <input
+            required
+            id="price"
+            type="text"
+            class="form-control"
+            placeholder="0"
+            aria-label="price"
+            aria-describedby="basic-addon1"
+            name="campground[price]"
+            value="<%= campground.price %>"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          required
+          class="form-control mb-2"
+          id="description"
+          name="campground[description]"
+        >
+<%= campground.description %></textarea
+        >
+      </div>
+      <button class="btn btn-success mb-3">Update Campground</button>
+      <a href="/campgrounds/<%= campground._id %>" class="btn btn-secondary"
+        >Back To Campground</a
+      >
+    </form>
+  </div>
+</div>
+
+<script>
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".formValidated");
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+  Browse;
+</script>

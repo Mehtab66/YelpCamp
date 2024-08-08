@@ -1,0 +1,137 @@
+<% layout('Layouts/BiolerPlate') %>
+<link rel="stylesheet" href="/stylesheets/star.css" />
+<div class="row">
+  <div class="card" style="width: 35rem">
+    <img
+      style="width: 540px; height: 250px; object-fit: cover"
+      src="https://images.unsplash.com/photo-1718762538704-9698cd001106?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <h5 class="card-title"><%= campground.title %></h5>
+      <p class="card-text"></p>
+      <p><%= campground.description %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item text-muted"><%= campground.location %></li>
+      <li class="list-group-item">
+        Submitted By: <%= campground.author.username %>
+      </li>
+      <li class="list-group-item">$<%= campground.price %>/night</li>
+    </ul>
+
+    <% if(currentUser && campground.author.equals(currentUser._id)) {%>
+    <div class="card-body">
+      <a
+        href="/campgrounds/<%= campground._id %>/edit"
+        class="card-link btn btn-warning"
+        >Edit</a
+      >
+      <form
+        class="d-inline"
+        action="/campgrounds/<%= campground._id %>?_method=Delete"
+        method="post"
+      >
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+    <% }%>
+    <a class="btn btn-primary" href="/campgrounds">Back To Campgrounds</a>
+    <div class="card-footer text-muted">2 days ago</div>
+  </div>
+  <div class="col-6">
+    <h2>Leave a Review</h2>
+
+    <form
+      action="/campgrounds/<%= campground._id %>/reviews"
+      method="post"
+      class="form-container needs-validation"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="rating">Rating</label>
+        <div>
+          <input
+            style="width: 530px"
+            class="form-range"
+            type="range"
+            max="5"
+            min="0"
+            id="rating"
+            name="review[rating]"
+            required
+          />
+          <div class="invalid-feedback">Please provide a rating.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="body">Review</label>
+        <textarea
+          style="width: 530px"
+          class="form-control"
+          name="review[body]"
+          id="body"
+          cols="10"
+          rows="3"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please provide a review.</div>
+        <div class="valid-feedback">Great!</div>
+      </div>
+
+      <button class="btn btn-primary mb-3" type="submit">Submit</button>
+    </form>
+    <% for (let review of campground.reviews) {%>
+    <div class="card mb-3" style="width: 540px">
+      <h5 class="card-title"><%= review.author.username %></h5>
+
+      <div class="mb-3">
+        <h3>Rated element name</h3>
+        <p class="starability-result" data-rating="<%= review.rating %>">
+          Rated: <%= review.rating %> stars
+        </p>
+
+        <p class="card-text">Review: <%= review.body %></p>
+
+        <% if(currentUser && campground.author.equals(currentUser._id)) {%>
+
+        <form
+          action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
+          method="post"
+          style="display: inline"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+        <% }%>
+      </div>
+    </div>
+    <%}%>
+  </div>
+</div>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
