@@ -17,6 +17,7 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 const myname = "my name is muhammad mehtab ahmed";
+const age = 20;
 // MongoDB connection setup
 mongoose
   .connect("mongodb://127.0.0.1:27017/YELPCAMP", {
